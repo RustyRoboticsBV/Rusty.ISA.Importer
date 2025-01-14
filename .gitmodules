@@ -1,0 +1,3 @@
+[submodule "Submodules/Xml"]
+	path = Submodules/Xml
+	url = https://github.com/RustyRoboticsBV/Rusty.Xml.git
