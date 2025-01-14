@@ -21,12 +21,6 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         public const string Opcode = "opcode";
         public const string Id = "id";
 
-        // Metadata.
-        public const string DisplayName = "name";
-        public const string Description = "description";
-        public const string Icon = "icon";
-        public const string Category = "category";
-
         // Parameters.
         public const string BoolParameter = "bool";
         public const string IntParameter = "int";
@@ -46,6 +40,12 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         // Implementation.
         public const string Implementation = "implementation";
+
+        // Metadata.
+        public const string DisplayName = "name";
+        public const string Description = "description";
+        public const string Icon = "icon";
+        public const string Category = "category";
 
         // Editor node info.
         public const string EditorNodeInfo = "editor_node";
@@ -181,6 +181,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         ));
                         break;
 
+                    case Implementation:
+                        args.implementation = ProcessCode(element.InnerText);
+                        break;
+
                     case Icon:
                         string localPath = element.InnerText;
                         string globalPath = folderPath + "\\" + localPath;
@@ -194,10 +198,6 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         break;
                     case Category:
                         args.category = element.InnerText;
-                        break;
-
-                    case Implementation:
-                        args.implementation = ProcessCode(element.InnerText);
                         break;
 
                     case EditorNodeInfo:
@@ -232,7 +232,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         break;
 
                     default:
-                        throw new Exception($"Encountered XML element with name '{element.Name}' in file '{filePath}'. This name is not allowed.");
+                        throw new Exception($"Encountered XML element with name '{element.Name}' in instruction definition file " +
+                            $"'{filePath}'. This name is not allowed.");
                 }
             }
 
