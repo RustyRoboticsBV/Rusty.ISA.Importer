@@ -3,10 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Rusty.Xml;
+using Rusty.Cutscenes;
 
-namespace Rusty.Cutscenes.Importer.XmlLoader
+namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
-    public static class InstructionDefinitionElement
+    /// <summary>
+    /// A class that can import cutscene instruction definitions from XML files.
+    /// </summary>
+    public static class InstructionDefinitionLoader
     {
         /* Public constants. */
         #region XML_CONSTANTS
@@ -50,7 +54,7 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
         public const string MinWidth = "min_width";
         public const string MainColor = "color_main";
         public const string TextColor = "color_text";
-        
+
         // Default output.
         public const string HideDefaultOutput = "hide_default_output";
 
@@ -75,36 +79,17 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
         public const string ChoiceRule = "choice";
         public const string TupleRule = "tuple";
         public const string ListRule = "list";
-        public const string ReferenceRule = "reference";
-        public const string PreInstruction = "pre_instruction";
 
         public const string StartEnabled = "enabled";
         public const string StartSelected = "selected";
         public const string AddButtonText = "button_text";
         public const string PreviewSeparator = "preview_separator";
-
-        // Compiler hints.
-        public const string CompilerHint = "compiler_hint";
         #endregion
 
-        /* Private types. */
-        private class ConstructorArgs
-        {
-            public string opcode = "MISSING_OPCODE";
-            public List<ParameterDefinition> parameters = new();
-            public Texture2D icon;
-            public string displayName = "";
-            public string description = "";
-            public string category = "";
-            public string implementation = "";
-            public EditorNodeInfo editorNodeInfo;
-            public bool hideDefaultOutput;
-            public List<PreviewTerm> previewTerms = new();
-            public List<CompileRule> compileRules = new();
-            public string compilerHint = "";
-        }
-
         /* Public methods. */
+        /// <summary>
+        /// Load an instruction definition from some file path.
+        /// </summary>
         public static InstructionDefinition Load(string filePath)
         {
             // Get global file & folder paths.
@@ -192,7 +177,6 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
                         args.parameters.Add(new OutputParameter(GetId(element),
                             GetStringChild(element, DisplayName),
                             GetStringChild(element, Description),
-                            GetBoolChild(element, OverrideDefaultOutput),
                             GetStringChild(element, UseArgumentAsLabel)
                         ));
                         break;
@@ -245,16 +229,6 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
                         break;
                     case ListRule:
                         args.compileRules.Add(ParseList(element));
-                        break;
-                    case ReferenceRule:
-                        args.compileRules.Add(ParseReference(element));
-                        break;
-                    case PreInstruction:
-                        args.compileRules.Add(ParsePreInstruction(element));
-                        break;
-
-                    case CompilerHint:
-                        args.compilerHint = element.InnerText;
                         break;
 
                     default:
@@ -385,10 +359,6 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
                     return ParseTuple(element);
                 case ListRule:
                     return ParseList(element);
-                case ReferenceRule:
-                    return ParseReference(element);
-                case PreInstruction:
-                    return ParsePreInstruction(element);
                 default:
                     throw new Exception($"Tried to parse XML element '{element.Name}' as a compile rule, but the name does not "
                         + "represent a compile rule.");
@@ -469,33 +439,6 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
                 target,
                 GetStringChild(element, AddButtonText),
                 GetStringChild(element, PreviewSeparator)
-            );
-        }
-
-        private static ReferenceRule ParseReference(Element element)
-        {
-            CompileRule target = null;
-            for (int i = 0; i < element.Children.Count; i++)
-            {
-                Element child = element.Children[i];
-                CompileRule parsed = ParseCompileRule(child);
-                if (parsed != null)
-                    target = parsed;
-            }
-
-            return new ReferenceRule(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
-                target
-            );
-        }
-
-        private static PreInstruction ParsePreInstruction(Element element)
-        {
-            return new PreInstruction(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
-                GetStringChild(element, Opcode)
             );
         }
     }

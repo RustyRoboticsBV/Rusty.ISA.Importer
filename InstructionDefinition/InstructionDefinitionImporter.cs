@@ -1,8 +1,9 @@
 #if TOOLS
 using Godot;
 using Godot.Collections;
+using Rusty.Cutscenes;
 
-namespace Rusty.Cutscenes.Importer.XmlLoader
+namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
     /// <summary>
     /// An XML cutscene definition importer. Needed as an interface between the gdscript import plugin and the C# module, as we
@@ -15,7 +16,7 @@ namespace Rusty.Cutscenes.Importer.XmlLoader
         /* Public methods. */
         public static InstructionDefinition Import(string xmlFilePath, Dictionary importOptions)
         {
-            return InstructionDefinitionElement.Load(xmlFilePath);
+            return InstructionDefinitionLoader.Load(xmlFilePath);
         }
     }
 }
