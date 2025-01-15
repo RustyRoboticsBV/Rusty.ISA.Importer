@@ -1,10 +1,10 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Rusty.Xml;
 using Rusty.Cutscenes;
-using Godot.Collections;
 
 namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
@@ -83,6 +83,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         public const string ChoiceRule = "choice";
         public const string TupleRule = "tuple";
         public const string ListRule = "list";
+        public const string PreInstruction = "pre_instruction";
 
         public const string StartEnabled = "enabled";
         public const string StartSelected = "selected";
@@ -378,10 +379,21 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     return ParseTuple(element);
                 case ListRule:
                     return ParseList(element);
+                case PreInstruction:
+                    return ParsePreInstruction(element);
                 default:
                     throw new Exception($"Tried to parse XML element '{element.Name}' as a compile rule, but the name does not "
                         + "represent a compile rule.");
             }
+        }
+
+        private static PreInstruction ParsePreInstruction(Element element)
+        {
+            return new PreInstruction(GetId(element),
+                GetStringChild(element, DisplayName),
+                GetStringChild(element, Description),
+                GetStringChild(element, Opcode)
+            );
         }
 
         private static OptionRule ParseOption(Element element)
