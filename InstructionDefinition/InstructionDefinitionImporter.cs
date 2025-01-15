@@ -15,82 +15,6 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
     [GlobalClass]
     public partial class InstructionDefinitionImporter : Node
     {
-
-        /* Public constants. */
-        #region XML_CONSTANTS
-        // Definition.
-        public const string InstructionDefinition = "instruction_definition";
-
-        // Id.
-        public const string Opcode = "opcode";
-        public const string Id = "id";
-
-        // Parameters.
-        public const string BoolParameter = "bool";
-        public const string IntParameter = "int";
-        public const string IntSliderParameter = "islider";
-        public const string FloatParameter = "float";
-        public const string FloatSliderParameter = "fslider";
-        public const string LineParameter = "line";
-        public const string MultilineParameter = "multiline";
-        public const string ColorParameter = "color";
-        public const string OutputParameter = "output";
-
-        public const string DefaultValue = "default";
-        public const string MinValue = "min";
-        public const string MaxValue = "max";
-        public const string OverrideDefaultOutput = "override_default_output";
-        public const string UseArgumentAsLabel = "use_argument_as_label";
-
-        // Implementation.
-        public const string Implementation = "implementation";
-
-        // Metadata.
-        public const string DisplayName = "name";
-        public const string Description = "description";
-        public const string Icon = "icon";
-        public const string Category = "category";
-
-        // Editor node info.
-        public const string EditorNodeInfo = "editor_node";
-
-        public const string Priority = "priority";
-        public const string MinWidth = "min_width";
-        public const string MainColor = "color_main";
-        public const string TextColor = "color_text";
-
-        // Default output.
-        public const string HideDefaultOutput = "hide_default_output";
-
-        // Preview terms.
-        public const string TextTerm = "text_term";
-        public const string ArgumentTerm = "argument_term";
-        public const string CompileRuleTerm = "rule_term";
-
-        public const string Text = "text";
-        public const string ParameterId = "parameter";
-        public const string CompileRuleId = "rule";
-        public const string HideIf = "hide_if";
-
-        public const string HideIfNever = "never";
-        public const string HideIfPrevEmpty = "prev_is_empty";
-        public const string HideIfNextEmpty = "next_is_empty";
-        public const string HideIfEitherEmpty = "either_is_empty";
-        public const string HideIfBothEmpty = "both_are_empty";
-
-        // Compile rules.
-        public const string OptionRule = "option";
-        public const string ChoiceRule = "choice";
-        public const string TupleRule = "tuple";
-        public const string ListRule = "list";
-        public const string PreInstruction = "pre_instruction";
-
-        public const string StartEnabled = "enabled";
-        public const string StartSelected = "selected";
-        public const string AddButtonText = "button_text";
-        public const string PreviewSeparator = "preview_separator";
-        #endregion
-
         /* Public methods. */
         /// <summary>
         /// Load an instruction definition from some file path.
@@ -123,123 +47,123 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
                 switch (element.Name)
                 {
-                    case Opcode:
+                    case Keywords.Opcode:
                         args.opcode = element.InnerText;
                         break;
 
-                    case BoolParameter:
+                    case Keywords.BoolParameter:
                         args.parameters.Add(new BoolParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetBoolChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetBoolChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case IntParameter:
+                    case Keywords.IntParameter:
                         args.parameters.Add(new IntParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetIntChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetIntChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case IntSliderParameter:
+                    case Keywords.IntSliderParameter:
                         args.parameters.Add(new IntSliderParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetIntChild(element, DefaultValue),
-                            GetIntChild(element, MinValue),
-                            GetIntChild(element, MaxValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetIntChild(element, Keywords.DefaultValue),
+                            GetIntChild(element, Keywords.MinValue),
+                            GetIntChild(element, Keywords.MaxValue)
                         ));
                         break;
-                    case FloatParameter:
+                    case Keywords.FloatParameter:
                         args.parameters.Add(new FloatParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetFloatChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetFloatChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case FloatSliderParameter:
+                    case Keywords.FloatSliderParameter:
                         args.parameters.Add(new FloatSliderParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetFloatChild(element, DefaultValue),
-                            GetFloatChild(element, MinValue),
-                            GetFloatChild(element, MaxValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetFloatChild(element, Keywords.DefaultValue),
+                            GetFloatChild(element, Keywords.MinValue),
+                            GetFloatChild(element, Keywords.MaxValue)
                         ));
                         break;
-                    case LineParameter:
+                    case Keywords.LineParameter:
                         args.parameters.Add(new LineParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetStringChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetStringChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case MultilineParameter:
+                    case Keywords.MultilineParameter:
                         args.parameters.Add(new MultilineParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetStringChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetStringChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case ColorParameter:
+                    case Keywords.ColorParameter:
                         args.parameters.Add(new ColorParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetColorChild(element, DefaultValue)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetColorChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case OutputParameter:
+                    case Keywords.OutputParameter:
                         args.parameters.Add(new OutputParameter(GetId(element),
-                            GetStringChild(element, DisplayName),
-                            GetStringChild(element, Description),
-                            GetStringChild(element, UseArgumentAsLabel)
+                            GetStringChild(element, Keywords.DisplayName),
+                            GetStringChild(element, Keywords.Description),
+                            GetStringChild(element, Keywords.UseArgumentAsLabel)
                         ));
                         break;
 
-                    case Implementation:
+                    case Keywords.Implementation:
                         args.implementation = ProcessImplementation(element.InnerText);
                         break;
 
-                    case Icon:
+                    case Keywords.Icon:
                         args.icon = GetTexture(folderPath, element.InnerText);
                         break;
-                    case DisplayName:
+                    case Keywords.DisplayName:
                         args.displayName = element.InnerText;
                         break;
-                    case Description:
+                    case Keywords.Description:
                         args.description = element.InnerText;
                         break;
-                    case Category:
+                    case Keywords.Category:
                         args.category = element.InnerText;
                         break;
 
-                    case EditorNodeInfo:
+                    case Keywords.EditorNodeInfo:
                         EditorNodeInfo defaults = new EditorNodeInfo();
-                        int priority = GetIntChild(element, Priority, defaults.Priority);
-                        int minWidth = GetIntChild(element, MinWidth, defaults.MinWidth);
-                        Color mainColor = GetColorChild(element, MainColor, defaults.MainColor);
-                        Color textColor = GetColorChild(element, TextColor, defaults.TextColor);
+                        int priority = GetIntChild(element, Keywords.Priority, defaults.Priority);
+                        int minWidth = GetIntChild(element, Keywords.MinWidth, defaults.MinWidth);
+                        Color mainColor = GetColorChild(element, Keywords.MainColor, defaults.MainColor);
+                        Color textColor = GetColorChild(element, Keywords.TextColor, defaults.TextColor);
                         args.editorNodeInfo = new EditorNodeInfo(priority, minWidth, mainColor, textColor);
                         break;
 
-                    case HideDefaultOutput:
+                    case Keywords.HideDefaultOutput:
                         args.hideDefaultOutput = true;
                         break;
 
-                    case TextTerm:
-                    case ArgumentTerm:
-                    case CompileRuleTerm:
+                    case Keywords.TextTerm:
+                    case Keywords.ArgumentTerm:
+                    case Keywords.CompileRuleTerm:
                         break;
 
-                    case OptionRule:
+                    case Keywords.OptionRule:
                         args.compileRules.Add(ParseOption(element));
                         break;
-                    case ChoiceRule:
+                    case Keywords.ChoiceRule:
                         args.compileRules.Add(ParseChoice(element));
                         break;
-                    case TupleRule:
+                    case Keywords.TupleRule:
                         args.compileRules.Add(ParseTuple(element));
                         break;
-                    case ListRule:
+                    case Keywords.ListRule:
                         args.compileRules.Add(ParseList(element));
                         break;
 
@@ -291,7 +215,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             try
             {
-                return element.GetAttribute(Id);
+                return element.GetAttribute(Keywords.Id);
             }
             catch
             {
@@ -369,7 +293,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 Image image = new();
                 image.Load(globalPath);
 
-                return ImageTexture.CreateFromImage(image);
+                ImageTexture texture = ImageTexture.CreateFromImage(image);
+                if (!texture.ResourcePath.StartsWith("res://") || !texture.ResourcePath.StartsWith("user://"))
+                    texture.ResourcePath = globalPath;
+                return texture;
             }
             catch
             {
@@ -382,20 +309,20 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             switch (element.Name)
             {
-                case DisplayName:
-                case Description:
-                case PreviewSeparator:
-                case AddButtonText:
+                case Keywords.DisplayName:
+                case Keywords.Description:
+                case Keywords.PreviewSeparator:
+                case Keywords.AddButtonText:
                     return null;
-                case OptionRule:
+                case Keywords.OptionRule:
                     return ParseOption(element);
-                case ChoiceRule:
+                case Keywords.ChoiceRule:
                     return ParseChoice(element);
-                case TupleRule:
+                case Keywords.TupleRule:
                     return ParseTuple(element);
-                case ListRule:
+                case Keywords.ListRule:
                     return ParseList(element);
-                case PreInstruction:
+                case Keywords.PreInstruction:
                     return ParsePreInstruction(element);
                 default:
                     throw new Exception($"Tried to parse XML element '{element.Name}' as a compile rule, but the name does not "
@@ -406,9 +333,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         private static PreInstruction ParsePreInstruction(Element element)
         {
             return new PreInstruction(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
-                GetStringChild(element, Opcode)
+                GetStringChild(element, Keywords.DisplayName),
+                GetStringChild(element, Keywords.Description),
+                GetStringChild(element, Keywords.Opcode)
             );
         }
 
@@ -424,10 +351,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
 
             return new OptionRule(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
+                GetStringChild(element, Keywords.DisplayName),
+                GetStringChild(element, Keywords.Description),
                 target,
-                GetBoolChild(element, StartEnabled)
+                GetBoolChild(element, Keywords.StartEnabled)
             );
         }
 
@@ -443,10 +370,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
 
             return new ChoiceRule(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
+                GetStringChild(element, Keywords.DisplayName),
+                GetStringChild(element, Keywords.Description),
                 targets.ToArray(),
-                GetIntChild(element, StartSelected)
+                GetIntChild(element, Keywords.StartSelected)
             );
         }
 
@@ -462,10 +389,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
 
             return new TupleRule(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
+                GetStringChild(element, Keywords.DisplayName),
+                GetStringChild(element, Keywords.Description),
                 targets.ToArray(),
-                GetStringChild(element, PreviewSeparator)
+                GetStringChild(element, Keywords.PreviewSeparator)
             );
         }
 
@@ -481,11 +408,11 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
 
             return new ListRule(GetId(element),
-                GetStringChild(element, DisplayName),
-                GetStringChild(element, Description),
+                GetStringChild(element, Keywords.DisplayName),
+                GetStringChild(element, Keywords.Description),
                 target,
-                GetStringChild(element, AddButtonText),
-                GetStringChild(element, PreviewSeparator)
+                GetStringChild(element, Keywords.AddButtonText),
+                GetStringChild(element, Keywords.PreviewSeparator)
             );
         }
     }
