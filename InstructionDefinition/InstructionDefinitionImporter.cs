@@ -200,9 +200,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         break;
 
                     case Icon:
-                        string localPath = element.InnerText;
-                        string globalPath = folderPath + "\\" + localPath;
-                        args.icon = ResourceLoader.Load<Texture2D>(globalPath);
+                        args.icon = GetTexture(folderPath, element.InnerText);
                         break;
                     case DisplayName:
                         args.displayName = element.InnerText;
@@ -358,6 +356,24 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             catch
             {
                 return defaultValue;
+            }
+        }
+
+        private static Texture2D GetTexture(string folderPath, string localFilePath)
+        {
+            try
+            {
+                string localPath = localFilePath;
+                string globalPath = folderPath + "\\" + localPath;
+
+                Image image = new();
+                image.Load(globalPath);
+
+                return ImageTexture.CreateFromImage(image);
+            }
+            catch
+            {
+                return null;
             }
         }
 
