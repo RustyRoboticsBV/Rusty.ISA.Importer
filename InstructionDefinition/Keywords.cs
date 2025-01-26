@@ -19,6 +19,7 @@
         public const string IntSliderParameter = "islider";
         public const string FloatParameter = "float";
         public const string FloatSliderParameter = "fslider";
+        public const string CharParameter = "char";
         public const string LineParameter = "line";
         public const string MultilineParameter = "multiline";
         public const string ColorParameter = "color";
@@ -27,7 +28,6 @@
         public const string DefaultValue = "default";
         public const string MinValue = "min";
         public const string MaxValue = "max";
-        public const string OverrideDefaultOutput = "override_default_output";
         public const string UseArgumentAsLabel = "use_argument_as_label";
 
         // Implementation.
@@ -67,11 +67,11 @@
         public const string HideIfBothEmpty = "both_are_empty";
 
         // Compile rules.
+        public const string PreInstruction = "pre_instruction";
         public const string OptionRule = "option";
         public const string ChoiceRule = "choice";
         public const string TupleRule = "tuple";
         public const string ListRule = "list";
-        public const string PreInstruction = "pre_instruction";
 
         public const string StartEnabled = "enabled";
         public const string StartSelected = "selected";

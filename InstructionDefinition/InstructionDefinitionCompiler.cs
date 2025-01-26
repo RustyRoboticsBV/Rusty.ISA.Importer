@@ -93,6 +93,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     element.AddChild(new Element(Keywords.MinValue, floatSliderParameter.MinValue.ToString()));
                     element.AddChild(new Element(Keywords.MaxValue, floatSliderParameter.MaxValue.ToString()));
                     break;
+                case CharParameter charParameter:
+                    element.Name = Keywords.CharParameter;
+                    element.AddChild(new Element(Keywords.DefaultValue, charParameter.DefaultValue.ToString()));
+                    break;
                 case LineParameter lineParameter:
                     element.Name = Keywords.LineParameter;
                     element.AddChild(new Element(Keywords.DefaultValue, lineParameter.DefaultValue.ToString()));
