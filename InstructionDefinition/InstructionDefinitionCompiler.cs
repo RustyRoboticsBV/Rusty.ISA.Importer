@@ -28,20 +28,19 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
 
             // Implementation.
-            root.AddChild(new Element(Keywords.Implementation, definition.Implementation));
+            if (definition.Implementation != null)
+                root.AddChild(CompileImplementation(definition.Implementation));
 
             // Meta-data.
+            if (definition.Icon != null)
+                root.AddChild(new Element(Keywords.Icon, definition.Icon.ResourcePath));
             root.AddChild(new Element(Keywords.DisplayName, definition.DisplayName));
             root.AddChild(new Element(Keywords.Description, definition.Description));
             root.AddChild(new Element(Keywords.Category, definition.Category));
-            root.AddChild(new Element(Keywords.Icon, definition.Icon.ResourcePath));
 
             // Editor node.
             if (definition.EditorNode != null)
                 root.AddChild(CompileEditorNodeInfo(definition.EditorNode));
-
-            // Default output.
-            root.AddChild(new Element(Keywords.HideDefaultOutput, definition.HideDefaultOutput.ToString()));
 
             // Preview terms.
             for (int i = 0; i < definition.Preview.Length; i++)
@@ -49,21 +48,24 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 root.AddChild(CompilePreviewTerm(definition.Preview[i]));
             }
 
-            // Compile rules.
-            for (int i = 0; i < definition.CompileRules.Length; i++)
-            {
-                root.AddChild(CompileCompileRule(definition.CompileRules[i]));
-            }
+            // Pre-instructions.
+            if (definition.PreInstructions.Length > 0)
+                root.AddChild(CompileRules(Keywords.PreInstructions, definition.PreInstructions));
 
+            // Post-instructions.
+            if (definition.PostInstructions.Length > 0)
+                root.AddChild(CompileRules(Keywords.PostInstructions, definition.PostInstructions));
+
+            // Return finished document.
             return new Document(definition.ResourceName, root);
         }
 
         /* Private methods. */
-        private static Element CompileParameter(ParameterDefinition parameter)
+        private static Element CompileParameter(Parameter parameter)
         {
             Element element = new Element("", "");
 
-            element.Attributes.Add(new Attribute(Keywords.Id, parameter.Id));
+            element.Attributes.Add(new Attribute(Keywords.Id, parameter.ID));
             element.AddChild(new Element(Keywords.DisplayName, parameter.DisplayName));
             element.AddChild(new Element(Keywords.Description, parameter.Description));
 
@@ -97,9 +99,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     element.Name = Keywords.CharParameter;
                     element.AddChild(new Element(Keywords.DefaultValue, charParameter.DefaultValue.ToString()));
                     break;
-                case LineParameter lineParameter:
-                    element.Name = Keywords.LineParameter;
-                    element.AddChild(new Element(Keywords.DefaultValue, lineParameter.DefaultValue.ToString()));
+                case TextParameter TextParameter:
+                    element.Name = Keywords.TextParameter;
+                    element.AddChild(new Element(Keywords.DefaultValue, TextParameter.DefaultValue.ToString()));
                     break;
                 case MultilineParameter multilineParameter:
                     element.Name = Keywords.MultilineParameter;
@@ -111,9 +113,23 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     break;
                 case OutputParameter outputParameter:
                     element.Name = Keywords.OutputParameter;
-                    element.AddChild(new Element(Keywords.DefaultValue, outputParameter.UseParameterAsPreview.ToString()));
+                    element.AddChild(new Element(Keywords.DefaultValue, outputParameter.UseArgumentAsPreview.ToString()));
                     break;
             }
+            return element;
+        }
+
+        private static Element CompileImplementation(Implementation implementation)
+        {
+            Element element = new Element("implementation", "");
+
+            if (implementation.Members != "")
+                element.AddChild(new Element(Keywords.Members, implementation.Members));
+            if (implementation.Initialize != "")
+                element.AddChild(new Element(Keywords.Initialize, implementation.Initialize));
+            if (implementation.Execute != "")
+                element.AddChild(new Element(Keywords.Execute, implementation.Execute));
+
             return element;
         }
 
@@ -148,11 +164,11 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     break;
                 case ArgumentTerm argTerm:
                     element.Name = Keywords.ArgumentTerm;
-                    element.AddChild(new Element(Keywords.ParameterId, argTerm.ParameterId));
+                    element.AddChild(new Element(Keywords.ParameterId, argTerm.ParameterID));
                     break;
                 case CompileRuleTerm ruleTerm:
                     element.Name = Keywords.CompileRuleTerm;
-                    element.AddChild(new Element(Keywords.CompileRuleId, ruleTerm.CompileRuleId));
+                    element.AddChild(new Element(Keywords.CompileRuleId, ruleTerm.CompileRuleID));
                     break;
             }
             return element;
@@ -162,14 +178,14 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             Element element = new Element("", "");
 
-            element.Attributes.Add(new Attribute(Keywords.Id, compileRule.Id));
+            element.Attributes.Add(new Attribute(Keywords.Id, compileRule.ID));
             element.AddChild(new Element(Keywords.DisplayName, compileRule.DisplayName));
             element.AddChild(new Element(Keywords.Description, compileRule.Description));
 
             switch (compileRule)
             {
-                case PreInstruction preInstruction:
-                    element.Name = Keywords.PreInstruction;
+                case InstructionRule preInstruction:
+                    element.Name = Keywords.InstructionRule;
                     element.AddChild(new Element(Keywords.Opcode, preInstruction.Opcode));
                     break;
                 case OptionRule optionRule:
@@ -211,6 +227,16 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             nodeInfo.AddChild(new Element(Keywords.MainColor, editorNode.MainColor.ToHtml()));
             nodeInfo.AddChild(new Element(Keywords.TextColor, editorNode.TextColor.ToHtml()));
             return nodeInfo;
+        }
+
+        private static Element CompileRules(string elementName, CompileRule[] rules)
+        {
+            Element element = new Element(elementName, "");
+            for (int i = 0; i < rules.Length; i++)
+            {
+                element.AddChild(CompileCompileRule(rules[i]));
+            }
+            return element;
         }
     }
 }

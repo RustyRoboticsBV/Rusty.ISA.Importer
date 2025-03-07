@@ -80,8 +80,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                             GetCharChild(element, Keywords.DefaultValue)
                         ));
                         break;
-                    case Keywords.LineParameter:
-                        args.parameters.Add(new LineParameter(GetId(element),
+                    case Keywords.TextParameter:
+                        args.parameters.Add(new TextParameter(GetId(element),
                             GetStringChild(element, Keywords.DisplayName),
                             GetStringChild(element, Keywords.Description),
                             GetStringChild(element, Keywords.DefaultValue)
@@ -105,12 +105,13 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         args.parameters.Add(new OutputParameter(GetId(element),
                             GetStringChild(element, Keywords.DisplayName),
                             GetStringChild(element, Keywords.Description),
-                            GetStringChild(element, Keywords.UseArgumentAsLabel)
+                            GetBoolChild(element, Keywords.RemoveDefaultOutput),
+                            GetStringChild(element, Keywords.UseArgumentAsPreview)
                         ));
                         break;
 
                     case Keywords.Implementation:
-                        args.implementation = ProcessImplementation(element.InnerText);
+                        args.implementation = ParseImplementation(element);
                         break;
 
                     case Keywords.Icon:
@@ -135,26 +136,16 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         args.editorNodeInfo = new EditorNodeInfo(priority, minWidth, mainColor, textColor);
                         break;
 
-                    case Keywords.HideDefaultOutput:
-                        args.hideDefaultOutput = true;
-                        break;
-
                     case Keywords.TextTerm:
                     case Keywords.ArgumentTerm:
                     case Keywords.CompileRuleTerm:
                         break;
 
-                    case Keywords.OptionRule:
-                        args.compileRules.Add(ParseOption(element));
+                    case Keywords.PreInstructions:
+                        args.preInstructions = ParseCompileRules(element);
                         break;
-                    case Keywords.ChoiceRule:
-                        args.compileRules.Add(ParseChoice(element));
-                        break;
-                    case Keywords.TupleRule:
-                        args.compileRules.Add(ParseTuple(element));
-                        break;
-                    case Keywords.ListRule:
-                        args.compileRules.Add(ParseList(element));
+                    case Keywords.PostInstructions:
+                        args.postInstructions = ParseCompileRules(element);
                         break;
 
                     default:
@@ -165,23 +156,13 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
             // Create instruction definition.
             return new InstructionDefinition(
-                args.opcode, args.parameters.ToArray(),
-                args.implementation,
+                args.opcode, args.parameters.ToArray(), args.implementation,
                 args.icon, args.displayName, args.description, args.category,
-                args.editorNodeInfo, args.hideDefaultOutput, args.previewTerms.ToArray(), args.compileRules.ToArray()
+                args.editorNodeInfo, args.previewTerms.ToArray(), args.preInstructions.ToArray(), args.postInstructions.ToArray()
             );
         }
 
         /* Private methods. */
-        /// <summary>
-        /// Process a string of implementation code such that it is ready to be read.
-        /// </summary>
-        private static string ProcessImplementation(string code)
-        {
-            return code;
-        }
-
-
         private static string GetId(Element element, string defaultValue = "")
         {
             try
@@ -276,10 +257,15 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 Image image = new();
                 image.Load(globalPath);
 
-                ImageTexture texture = ImageTexture.CreateFromImage(image);
-                if (!texture.ResourcePath.StartsWith("res://") || !texture.ResourcePath.StartsWith("user://"))
-                    texture.ResourcePath = globalPath;
-                return texture;
+                if (!image.IsEmpty())
+                {
+                    ImageTexture texture = ImageTexture.CreateFromImage(image);
+                    if (!texture.ResourcePath.StartsWith("res://") || !texture.ResourcePath.StartsWith("user://"))
+                        texture.ResourcePath = globalPath;
+                    return texture;
+                }
+                else
+                    return null;
             }
             catch
             {
@@ -287,6 +273,60 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
         }
 
+
+        private static Implementation ParseImplementation(Element element)
+        {
+            string members = "";
+            string initialize = "";
+            string execute = "";
+            foreach (Element child in element.Children)
+            {
+                switch (child.InnerText)
+                {
+                    case Keywords.Members:
+                        members = child.InnerText;
+                        break;
+                    case Keywords.Initialize:
+                        initialize = child.InnerText;
+                        break;
+                    case Keywords.Execute:
+                        execute = child.InnerText;
+                        break;
+                }
+            }
+
+            return new(members, execute, initialize);
+        }
+
+
+        private static List<CompileRule> ParseCompileRules(Element element)
+        {
+            List<CompileRule> result = new();
+
+            foreach (Element child in element.Children)
+            {
+                switch (child.InnerText)
+                {
+                    case Keywords.InstructionRule:
+                        result.Add(ParseInstruction(child));
+                        break;
+                    case Keywords.OptionRule:
+                        result.Add(ParseOption(child));
+                        break;
+                    case Keywords.ChoiceRule:
+                        result.Add(ParseChoice(child));
+                        break;
+                    case Keywords.TupleRule:
+                        result.Add(ParseTuple(child));
+                        break;
+                    case Keywords.ListRule:
+                        result.Add(ParseList(child));
+                        break;
+                }
+            }
+
+            return result;
+        }
 
         private static CompileRule ParseCompileRule(Element element)
         {
@@ -307,17 +347,17 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     return ParseTuple(element);
                 case Keywords.ListRule:
                     return ParseList(element);
-                case Keywords.PreInstruction:
-                    return ParsePreInstruction(element);
+                case Keywords.InstructionRule:
+                    return ParseInstruction(element);
                 default:
                     throw new Exception($"Tried to parse XML element '{element.Name}' as a compile rule, but the name does not "
                         + "represent a compile rule.");
             }
         }
 
-        private static PreInstruction ParsePreInstruction(Element element)
+        private static InstructionRule ParseInstruction(Element element)
         {
-            return new PreInstruction(GetId(element),
+            return new InstructionRule(GetId(element),
                 GetStringChild(element, Keywords.DisplayName),
                 GetStringChild(element, Keywords.Description),
                 GetStringChild(element, Keywords.Opcode)

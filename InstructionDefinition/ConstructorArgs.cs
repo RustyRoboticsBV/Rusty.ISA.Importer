@@ -11,10 +11,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
     {
         // Definition.
         public string opcode = "MISSING_OPCODE";
-        public List<ParameterDefinition> parameters = new List<ParameterDefinition>();
-
-        // Runtime.
-        public string implementation = "";
+        public List<Parameter> parameters = new List<Parameter>();
+        public Implementation implementation = null;
 
         // Meta-data.
         public Texture2D icon = null;
@@ -24,8 +22,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         // Editor.
         public EditorNodeInfo editorNodeInfo = null;
-        public bool hideDefaultOutput = false;
         public List<PreviewTerm> previewTerms = new List<PreviewTerm>();
-        public List<CompileRule> compileRules = new List<CompileRule>();
+        public List<CompileRule> preInstructions = new List<CompileRule>();
+        public List<CompileRule> postInstructions = new List<CompileRule>();
     }
 }

@@ -7,7 +7,7 @@
     {
         /* Public constants. */
         // Definition.
-        public const string InstructionDefinition = "instruction_definition";
+        public const string InstructionDefinition = "definition";
 
         // Id.
         public const string Opcode = "opcode";
@@ -20,7 +20,7 @@
         public const string FloatParameter = "float";
         public const string FloatSliderParameter = "fslider";
         public const string CharParameter = "char";
-        public const string LineParameter = "line";
+        public const string TextParameter = "text";
         public const string MultilineParameter = "multiline";
         public const string ColorParameter = "color";
         public const string OutputParameter = "output";
@@ -28,10 +28,14 @@
         public const string DefaultValue = "default";
         public const string MinValue = "min";
         public const string MaxValue = "max";
-        public const string UseArgumentAsLabel = "use_argument_as_label";
+        public const string RemoveDefaultOutput = "remove_default";
+        public const string UseArgumentAsPreview = "use_argument_as_preview";
 
         // Implementation.
         public const string Implementation = "implementation";
+        public const string Members = "members";
+        public const string Initialize = "initialize";
+        public const string Execute = "execute";
 
         // Metadata.
         public const string DisplayName = "name";
@@ -67,7 +71,10 @@
         public const string HideIfBothEmpty = "both_are_empty";
 
         // Compile rules.
-        public const string PreInstruction = "pre_instruction";
+        public const string PreInstructions = "pre";
+        public const string PostInstructions = "post";
+
+        public const string InstructionRule = "instruction";
         public const string OptionRule = "option";
         public const string ChoiceRule = "choice";
         public const string TupleRule = "tuple";
