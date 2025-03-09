@@ -17,20 +17,23 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         /// <summary>
         /// Load an instruction definition from some file path.
         /// </summary>
-        public static InstructionDefinition Import(string xmlFilePath, Dictionary importOptions)
+        public static InstructionDefinition Import(string filePath, Dictionary importOptions)
         {
             // Get global file & folder paths.
-            string filePath = ProjectSettings.GlobalizePath(xmlFilePath);
-            string folderPath = Path.GetDirectoryName(xmlFilePath);
-            string xml = File.ReadAllText(xmlFilePath);
+            string globalPath = ProjectSettings.GlobalizePath(filePath);
+            string folderPath = Path.GetDirectoryName(globalPath);
+
+            // Load XML file.
+            string xml = File.ReadAllText(globalPath);
+
+            // Decompile.
             try
             {
                 return InstructionDefinitionDecompiler.Decompile(xml, folderPath);
             }
             catch (Exception ex)
             {
-                string filename = Path.GetFileName(xmlFilePath);
-                throw new Exception($"Instrtuction definition '{xmlFilePath}': {ex.Message}");
+                throw new Exception($"Error importing instruction definition at '{globalPath}': {ex.Message}");
             }
         }
     }

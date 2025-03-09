@@ -11,7 +11,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
     {
         // Definition.
         public string opcode = "MISSING_OPCODE";
-        public List<Parameter> parameters = new List<Parameter>();
+        public List<Parameter> parameters = new();
         public Implementation implementation = null;
 
         // Meta-data.
@@ -22,8 +22,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         // Editor.
         public EditorNodeInfo editorNodeInfo = null;
-        public List<PreviewTerm> previewTerms = new List<PreviewTerm>();
-        public List<CompileRule> preInstructions = new List<CompileRule>();
-        public List<CompileRule> postInstructions = new List<CompileRule>();
+        public List<PreviewTerm> previewTerms = new();
+        public List<CompileRule> preInstructions = new();
+        public List<CompileRule> postInstructions = new();
     }
 }

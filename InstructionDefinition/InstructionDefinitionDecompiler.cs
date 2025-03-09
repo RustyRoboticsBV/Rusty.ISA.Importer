@@ -105,7 +105,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         args.parameters.Add(new OutputParameter(GetId(element),
                             GetStringChild(element, Keywords.DisplayName),
                             GetStringChild(element, Keywords.Description),
-                            GetBoolChild(element, Keywords.RemoveDefaultOutput),
+                            element.HasChild(Keywords.RemoveDefaultOutput),
                             GetStringChild(element, Keywords.UseArgumentAsPreview)
                         ));
                         break;
@@ -142,10 +142,10 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         break;
 
                     case Keywords.PreInstructions:
-                        args.preInstructions = ParseCompileRules(element);
+                        args.preInstructions = ParseSecondaryInstructions(element);
                         break;
                     case Keywords.PostInstructions:
-                        args.postInstructions = ParseCompileRules(element);
+                        args.postInstructions = ParseSecondaryInstructions(element);
                         break;
 
                     default:
@@ -299,13 +299,13 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         }
 
 
-        private static List<CompileRule> ParseCompileRules(Element element)
+        private static List<CompileRule> ParseSecondaryInstructions(Element element)
         {
             List<CompileRule> result = new();
 
             foreach (Element child in element.Children)
             {
-                switch (child.InnerText)
+                switch (child.Name)
                 {
                     case Keywords.InstructionRule:
                         result.Add(ParseInstruction(child));

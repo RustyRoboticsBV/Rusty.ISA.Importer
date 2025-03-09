@@ -33,6 +33,7 @@
 
         // Implementation.
         public const string Implementation = "implementation";
+
         public const string Members = "members";
         public const string Initialize = "initialize";
         public const string Execute = "execute";
@@ -50,9 +51,6 @@
         public const string MinWidth = "min_width";
         public const string MainColor = "color_main";
         public const string TextColor = "color_text";
-
-        // Default output.
-        public const string HideDefaultOutput = "hide_default_output";
 
         // Preview terms.
         public const string TextTerm = "text_term";

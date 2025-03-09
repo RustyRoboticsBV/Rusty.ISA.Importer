@@ -133,6 +133,16 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             return element;
         }
 
+        private static Element CompileEditorNodeInfo(EditorNodeInfo editorNode)
+        {
+            Element nodeInfo = new Element(Keywords.EditorNodeInfo, "");
+            nodeInfo.AddChild(new Element(Keywords.Priority, editorNode.Priority.ToString()));
+            nodeInfo.AddChild(new Element(Keywords.MinWidth, editorNode.MinWidth.ToString()));
+            nodeInfo.AddChild(new Element(Keywords.MainColor, editorNode.MainColor.ToHtml()));
+            nodeInfo.AddChild(new Element(Keywords.TextColor, editorNode.TextColor.ToHtml()));
+            return nodeInfo;
+        }
+
         private static Element CompilePreviewTerm(PreviewTerm term)
         {
             Element element = new Element("", "");
@@ -174,7 +184,17 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             return element;
         }
 
-        private static Element CompileCompileRule(CompileRule compileRule)
+        private static Element CompileRules(string elementName, CompileRule[] rules)
+        {
+            Element element = new Element(elementName, "");
+            for (int i = 0; i < rules.Length; i++)
+            {
+                element.AddChild(CompileRule(rules[i]));
+            }
+            return element;
+        }
+
+        private static Element CompileRule(CompileRule compileRule)
         {
             Element element = new Element("", "");
 
@@ -191,50 +211,30 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 case OptionRule optionRule:
                     element.Name = Keywords.OptionRule;
                     element.AddChild(new Element(Keywords.StartEnabled, optionRule.StartEnabled.ToString()));
-                    element.AddChild(CompileCompileRule(optionRule.Type));
+                    element.AddChild(CompileRule(optionRule.Type));
                     break;
                 case ChoiceRule choiceRule:
                     element.Name = Keywords.ChoiceRule;
                     element.AddChild(new Element(Keywords.StartSelected, choiceRule.StartSelected.ToString()));
                     foreach (CompileRule type in choiceRule.Types)
                     {
-                        element.AddChild(CompileCompileRule(type));
+                        element.AddChild(CompileRule(type));
                     }
                     break;
                 case TupleRule tupleRule:
                     element.Name = Keywords.ChoiceRule;
                     foreach (CompileRule type in tupleRule.Types)
                     {
-                        element.AddChild(CompileCompileRule(type));
+                        element.AddChild(CompileRule(type));
                     }
                     element.AddChild(new Element(Keywords.PreviewSeparator, tupleRule.PreviewSeparator.ToString()));
                     break;
                 case ListRule listRule:
                     element.Name = Keywords.ChoiceRule;
-                    element.AddChild(CompileCompileRule(listRule.Type));
+                    element.AddChild(CompileRule(listRule.Type));
                     element.AddChild(new Element(Keywords.AddButtonText, listRule.AddButtonText.ToString()));
                     element.AddChild(new Element(Keywords.PreviewSeparator, listRule.PreviewSeparator.ToString()));
                     break;
-            }
-            return element;
-        }
-
-        private static Element CompileEditorNodeInfo(EditorNodeInfo editorNode)
-        {
-            Element nodeInfo = new Element(Keywords.EditorNodeInfo, "");
-            nodeInfo.AddChild(new Element(Keywords.Priority, editorNode.Priority.ToString()));
-            nodeInfo.AddChild(new Element(Keywords.MinWidth, editorNode.MinWidth.ToString()));
-            nodeInfo.AddChild(new Element(Keywords.MainColor, editorNode.MainColor.ToHtml()));
-            nodeInfo.AddChild(new Element(Keywords.TextColor, editorNode.TextColor.ToHtml()));
-            return nodeInfo;
-        }
-
-        private static Element CompileRules(string elementName, CompileRule[] rules)
-        {
-            Element element = new Element(elementName, "");
-            for (int i = 0; i < rules.Length; i++)
-            {
-                element.AddChild(CompileCompileRule(rules[i]));
             }
             return element;
         }
