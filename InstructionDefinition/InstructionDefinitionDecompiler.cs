@@ -251,14 +251,27 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             try
             {
-                string localPath = localFilePath;
-                string globalPath = folderPath + "\\" + localPath;
+                // Globalize path.
+                string globalPath = folderPath + "\\" + localFilePath;
 
+                // Load image.
                 Image image = new();
                 image.Load(globalPath);
 
                 if (!image.IsEmpty())
                 {
+                    // Make the icon transparent.
+                    Color background = image.GetPixel(0, 0);
+                    for (int i = 0; i < image.GetWidth(); i++)
+                    {
+                        for (int j = 0; j < image.GetHeight(); j++)
+                        {
+                            if (image.GetPixel(i, j) == background)
+                                image.SetPixel(i, j, Colors.Transparent);
+                        }
+                    }
+
+                    // Create texture.
                     ImageTexture texture = ImageTexture.CreateFromImage(image);
                     if (!texture.ResourcePath.StartsWith("res://") || !texture.ResourcePath.StartsWith("user://"))
                         texture.ResourcePath = globalPath;
