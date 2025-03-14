@@ -29,7 +29,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             // Decompile.
             try
             {
-                return Deserializer.Decompile(xml, folderPath);
+                return Deserializer.Deserialize(xml, folderPath);
             }
             catch (Exception ex)
             {

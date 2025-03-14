@@ -7,7 +7,8 @@
     {
         public static string UndefinedCategory => "undefined";
 
-        public static string DefinitionFilename => "def";
-        public static string IconFilename => "icon";
+        public static string IndexFilename => "index.txt";
+        public static string DefinitionFilename => "def.xml";
+        public static string IconFilename => "icon.png";
     }
 }

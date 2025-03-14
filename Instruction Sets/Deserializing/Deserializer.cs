@@ -26,7 +26,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
                 throw new Exception($"Could not open file '{absolutePath}' due to error code '{error}'!");
 
             // Read index file.
-            string index = Encoding.Default.GetString(reader.ReadFile("index.txt."));
+            string index = Encoding.Default.GetString(reader.ReadFile(Keywords.IndexFilename));
             string[] files = index.Split('\n');
 
             // Deserialize all instructions.
@@ -39,11 +39,11 @@ namespace Rusty.CutsceneImporter.InstructionSets
                 string opcode = files[i].Substring(slash + 1);
 
                 // Read XML.
-                string defPath = $"{files[i]}/{Keywords.DefinitionFilename}.xml";
-                string xml = Encoding.Default.GetString(reader.ReadFile(files[i]));
+                string defPath = $"{files[i]}/{Keywords.DefinitionFilename}";
+                string xml = Encoding.Default.GetString(reader.ReadFile(defPath));
 
                 // Create instruction.
-                InstructionDefinition definition = InstructionDefinitions.Deserializer.Decompile(xml, "");
+                InstructionDefinition definition = InstructionDefinitions.Deserializer.Deserialize(xml, "");
 
                 // Read icon.
                 string iconPath = $"{files[i]}/{Keywords.IconFilename}.png";

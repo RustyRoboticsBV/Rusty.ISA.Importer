@@ -16,7 +16,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         /// <summary>
         /// Decompile a string of XML into an instruction definition.
         /// </summary>
-        public static InstructionDefinition Decompile(string xml, string iconFolderPath)
+        public static InstructionDefinition Deserialize(string xml, string iconFolderPath)
         {
             // Load XML document.
             Document document = new Document("definition", xml);

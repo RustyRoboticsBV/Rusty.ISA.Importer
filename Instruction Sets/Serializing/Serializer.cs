@@ -67,7 +67,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
             }
 
             // Create index file.
-            packer.StartFile("index.txt");
+            packer.StartFile(Keywords.IndexFilename);
             packer.WriteFile(Encoding.ASCII.GetBytes(index));
             packer.CloseFile();
 
