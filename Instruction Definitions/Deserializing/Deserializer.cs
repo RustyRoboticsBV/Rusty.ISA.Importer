@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Rusty.Xml;
 using Rusty.Cutscenes;
+using CutsceneImporter;
 
 namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
@@ -237,13 +238,21 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         private static Color GetColorChild(Element element, string name, Color defaultValue = default)
         {
+            string color = element.GetChild(name).InnerText;
             try
             {
-                return Color.FromHtml(element.GetChild(name).InnerText);
+                return Color.FromHtml(color);
             }
             catch
             {
-                return defaultValue;
+                try
+                {
+                    return ColorNameParser.Parse(color);
+                }
+                catch
+                {
+                    return defaultValue;
+                }
             }
         }
 
