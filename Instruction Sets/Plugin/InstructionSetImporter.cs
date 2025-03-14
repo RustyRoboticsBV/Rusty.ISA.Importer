@@ -1,7 +1,6 @@
 using Godot;
 using Godot.Collections;
 using System;
-using System.IO;
 using Rusty.Cutscenes;
 
 namespace Rusty.CutsceneImporter.InstructionSets
@@ -26,7 +25,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
             }
             catch (Exception ex)
             {
-                GD.PrintErr($"Could not import instruction set at '{filePath}' due to exception:\n{ex.Message}");
+                GD.PrintErr($"Could not import instruction set at '{filePath}' due to exception: '{ex.Message}'.");
                 return null;
             }
         }
