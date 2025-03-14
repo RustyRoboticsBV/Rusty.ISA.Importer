@@ -12,7 +12,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         /// <summary>
         /// Convert an instruction definition into an XML document.
         /// </summary>
-        public static Document Compile(InstructionDefinition definition)
+        public static Document Serialize(InstructionDefinition definition)
         {
             // Create root.
             Element root = new Element(Keywords.InstructionDefinition, "");
