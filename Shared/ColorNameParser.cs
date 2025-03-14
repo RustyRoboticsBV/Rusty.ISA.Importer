@@ -1,13 +1,16 @@
 ﻿using Godot;
 using System;
 
-namespace CutsceneImporter
+namespace Rusty.CutsceneImporter
 {
     /// <summary>
     /// Utility class that can parse specific color names into color objects.
     /// </summary>
     public static class ColorNameParser
     {
+        /// <summary>
+        /// Parse a color name and return a color.
+        /// </summary>
         public static Color Parse(string colorName)
         {
             switch (colorName)

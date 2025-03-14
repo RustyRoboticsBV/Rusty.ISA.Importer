@@ -108,7 +108,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     break;
                 case ColorParameter colorParameter:
                     element.Name = Keywords.ColorParameter;
-                    element.AddChild(new Element(Keywords.DefaultValue, '#' + colorParameter.DefaultValue.ToHtml()));
+                    element.AddChild(new Element(Keywords.DefaultValue, ColorSerializer.Serialize(colorParameter.DefaultValue)));
                     break;
                 case OutputParameter outputParameter:
                     element.Name = Keywords.OutputParameter;
@@ -137,8 +137,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             Element nodeInfo = new Element(Keywords.EditorNodeInfo, "");
             nodeInfo.AddChild(new Element(Keywords.Priority, editorNode.Priority.ToString()));
             nodeInfo.AddChild(new Element(Keywords.MinWidth, editorNode.MinWidth.ToString()));
-            nodeInfo.AddChild(new Element(Keywords.MainColor, '#' + editorNode.MainColor.ToHtml()));
-            nodeInfo.AddChild(new Element(Keywords.TextColor, '#' + editorNode.TextColor.ToHtml()));
+            nodeInfo.AddChild(new Element(Keywords.MainColor, ColorSerializer.Serialize(editorNode.MainColor)));
+            nodeInfo.AddChild(new Element(Keywords.TextColor, ColorSerializer.Serialize(editorNode.TextColor)));
             return nodeInfo;
         }
 
