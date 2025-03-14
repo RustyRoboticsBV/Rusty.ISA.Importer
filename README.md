@@ -6,16 +6,50 @@ It provides import plugins, serializers and deserializers for several resource t
 - Instruction sets, which use a ZIP file format.
 - Instruction definitions, which use an XML file format.
 
-## Parsing Notes
-Color values are encoded as hexadecimal numbers, and may contain alpha. Specific color name strings are also accepted. See ColorTable.md for a list.
+#### Parsing Notes
+Color values are encoded as hexadecimal numbers, and may contain alpha. Specific color name strings are also accepted. See [here](/ColorTable.md) for a list.
 
 If the parser cannot interpret a value, it uses the following default values:
 - `false` for booleans.
 - `0` for integers.
-- `0.0` for floats.
+- `0.0` for floating-point numbers.
 - `'0'` for characters.
 - `""` for strings.
-- `#00000000` for colors.
+- `#000000FF` for colors.
+
+## Cutscene Programs
+Cutscene programs follow the CSV file format. Rows are separated by linebreaks and cells are separated by commas. Rows are allowed to have different number of cells.
+
+If a cell contains a comma or double-quote, it must be enclosed with double-quotes. Within enclosed cells, the string `""` is interpreted as a single double-quote character. For example, the cell `"A,""B"""` is interpreted as `A,"B"`.
+
+Furthermore, the following format constraints are in place:
+- Every row represents exactly one instruction. This means that cells may not contain line-break character. Instead, line-breaks are represented with the string `\n`.
+  - Consequently, the string `\n` is represented as `\\n`.
+- The first cell of a row must contain the instruction's opcode. The cells that come after are interpreted as arguments.
+
+
+So the structure of each program is as follows:
+
+    opcode_1,arg_1,...,arg_n
+    ...
+    opcode_n,arg_1,...,arg_n
+
+## Instruction Sets
+Instruction sets are stored in ZIP files. The file should have the following internal structure:
+
+    ROOT
+     ├<category_name_1>
+     │ ├<opcode_1>
+     │ │ ├def.xml
+     │ │ └icon.png
+     │ ├...
+     │ └<opcode_n>
+     │   └...
+     ├...
+     └<category_name_n>
+       └...
+
+So the path to a file is always is category/opcode/file. The serializer places instructions without a category in a folder called "undefined".
 
 ## Instruction Definitions
 This section outlines the XML file structure for instruction definitions. Unless otherwise specified, all XML elements are optional.
@@ -25,13 +59,11 @@ See the [main module documentation](TODO) for an explanation about what each ele
     <!-- Root element. Required. -->
     <definition>
      
-     <!-- The opcode. Required element.
-          Should be unique within the instruction set! -->
+     <!-- The opcode. Required element. Should be unique within the instruction set! -->
      <opcode>str</opcode>
      
      
-     <!-- The parameters. Each parameter requires an id attribute.
-          Each ID should be unique within this file! -->
+     <!-- The parameters. Each parameter requires an id attribute. Each ID should be unique within this file! -->
      
      <!-- A boolean parameter. -->
      <bool id="str">
@@ -90,7 +122,7 @@ See the [main module documentation](TODO) for an explanation about what each ele
      <multiline id="str">
       <name>str</name>
       <desc>str</desc>
-      <default>str\nwith\nline-breaks</default>
+      <default>str</default>
      </multiline>
 
      <!-- A color parameter. -->
@@ -110,12 +142,11 @@ See the [main module documentation](TODO) for an explanation about what each ele
      
      
      
-     <!-- The implementation.
-          See the documentation of the cutscened module for syntax details. -->
+     <!-- The implementation. See the documentation of the cutscened module for syntax details. -->
      <implementation>
-      <members>member_definition_code;</members>
-      <initialize>initialize_code;</initialize>
-      <execute>execute_code;</execute>
+      <members>str</members>
+      <initialize>str</initialize>
+      <execute>str</execute>
      </implementation>
      
      
@@ -131,8 +162,8 @@ See the [main module documentation](TODO) for an explanation about what each ele
      
      
      
-     <!-- The preview terms. he <hide_if> elements should contain one of the following
-          values: never, prev_is_empty, next_is_empty, either_is_empty or both_are_empty. -->
+     <!-- The preview terms. The <hide_if> elements should contain one of the following values: never, prev_is_empty,
+          next_is_empty, either_is_empty or both_are_empty. -->
      
      <!-- A text preview term. -->
      <text_term>
@@ -140,15 +171,13 @@ See the [main module documentation](TODO) for an explanation about what each ele
       <hide_if>never</hide_if>
      </text_term>
      
-     <!-- An argument preview term.
-          The parameter value should match a parameter ID. -->
+     <!-- An argument preview term. The parameter value should match a parameter ID. -->
      <argument_term>
       <parameter>str</parameter>
       <hide_if>never</hide_if>
      </argument_term>
      
-     <!-- A compile rule term.
-          The rule value should match a pre-instruction or post-instruction rule ID. -->
+     <!-- A compile rule term. The rule value should match a pre-instruction or post-instruction rule ID. -->
      <rule_term>
       <rule>str</rule>
       <hide_if>never</hide_if>
@@ -156,8 +185,8 @@ See the [main module documentation](TODO) for an explanation about what each ele
      
      
      
-     <!-- The compile rules. Each rule should contain an unique ID. Nested rules
-          only need an unique ID within that rule. -->
+     <!-- The compile rules. Each rule should contain an unique ID. Nested rules only need an ID that is unique within their
+          parent rule. -->
      
      <!-- The pre-instruction block. May contain any number of compile rule elements. -->
      <pre>
@@ -206,6 +235,9 @@ See the [main module documentation](TODO) for an explanation about what each ele
      
      <!-- The post-instruction block. The contents are identical to the pre-instruction block. -->
      <post>
+
+      (rules)
+
      </post>
      
     </definition>
