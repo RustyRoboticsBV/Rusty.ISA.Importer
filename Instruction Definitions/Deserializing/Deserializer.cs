@@ -306,7 +306,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             string execute = "";
             foreach (Element child in element.Children)
             {
-                switch (child.InnerText)
+                switch (child.Name)
                 {
                     case Keywords.Members:
                         members = child.InnerText;
@@ -320,7 +320,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 }
             }
 
-            return new(members, execute, initialize);
+            return new(members, initialize, execute);
         }
 
 
