@@ -7,9 +7,9 @@ using Rusty.Cutscenes;
 namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
     /// <summary>
-    /// An decompiler for XML-based cutscene instruction definitions.
+    /// An deserializer for XML-based cutscene instruction definitions.
     /// </summary>
-    public static class InstructionDefinitionDecompiler
+    public static class Deserializer
     {
         /* Public methods. */
         /// <summary>
@@ -150,8 +150,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         break;
 
                     default:
-                        throw new Exception($"Tried to parse XML unrecognized element with name '{element.Name}', but this name "
-                           + "does not represent a legal value of an instruction definition.");
+                        throw new Exception($"Tried to parse unrecognized XML element with name '{element.Name}'.");
                 }
             }
 

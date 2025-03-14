@@ -40,7 +40,7 @@
 
         // Metadata.
         public const string DisplayName = "name";
-        public const string Description = "description";
+        public const string Description = "desc";
         public const string Icon = "icon";
         public const string Category = "category";
 
@@ -54,8 +54,6 @@
         public const string TextColor = "color_text";
 
         // Preview.
-        public const string PreviewSeparator = "separator";
-
         public const string TextTerm = "text_term";
         public const string ArgumentTerm = "argument_term";
         public const string CompileRuleTerm = "rule_term";
@@ -84,5 +82,6 @@
         public const string StartEnabled = "enabled";
         public const string StartSelected = "selected";
         public const string AddButtonText = "button_text";
+        public const string PreviewSeparator = "separator";
     }
 }

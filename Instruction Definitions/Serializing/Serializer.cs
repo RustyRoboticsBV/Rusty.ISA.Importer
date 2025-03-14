@@ -4,10 +4,9 @@ using Rusty.Cutscenes;
 namespace Rusty.CutsceneImporter.InstructionDefinitions
 {
     /// <summary>
-    /// A class that can combine an instruction set consisting of built-in instruction definitions with a folder containing
-    /// user-defined instruction definitions.
+    /// A class that can serialize an instruction definition into an XML document.
     /// </summary>
-    public static class InstructionDefinitionCompiler
+    public static class Serializer
     {
         /* Public methods. */
         /// <summary>
@@ -43,11 +42,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                 root.AddChild(CompileEditorNodeInfo(definition.EditorNode));
 
             // Preview.
-            root.AddChild(new Element(Keywords.PreviewSeparator, definition.PreviewSeparator));
-
-            for (int i = 0; i < definition.Preview.Length; i++)
+            for (int i = 0; i < definition.PreviewTerms.Length; i++)
             {
-                root.AddChild(CompilePreviewTerm(definition.Preview[i]));
+                root.AddChild(CompilePreviewTerm(definition.PreviewTerms[i]));
             }
 
             // Pre-instructions.
