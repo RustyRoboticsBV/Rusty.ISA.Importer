@@ -108,7 +108,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     break;
                 case ColorParameter colorParameter:
                     element.Name = Keywords.ColorParameter;
-                    element.AddChild(new Element(Keywords.DefaultValue, colorParameter.DefaultValue.ToString()));
+                    element.AddChild(new Element(Keywords.DefaultValue, '#' + colorParameter.DefaultValue.ToHtml()));
                     break;
                 case OutputParameter outputParameter:
                     element.Name = Keywords.OutputParameter;
