@@ -14,7 +14,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
         /// <summary>
         /// Save an instruction set to a file.
         /// </summary>
-        public static InstructionSet Serialize(string filePath)
+        public static InstructionSet Deserialize(string filePath)
         {
             // Get global file path.
             string absolutePath = PathUtility.GetPath(filePath);
