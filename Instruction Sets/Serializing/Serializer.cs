@@ -22,15 +22,16 @@ namespace Rusty.CutsceneImporter.InstructionSets
             string absolutePath = PathUtility.GetPath(filePath);
 
             // Create ZIP file.
-            ZipPacker packer = new ZipPacker();
+            ZipPacker packer = new();
             Error error = packer.Open(absolutePath);
             if (error != Error.Ok)
                 throw new Exception($"Could not open file '{absolutePath}' due to error code '{error}'!");
 
             // Write all instructions to the file.
+            string index = "";
             for (int i = 0; i < set.Definitions.Length; i++)
             {
-                InstructionDefinition def = set.Definitions[i];
+                InstructionDefinition def = set[i];
 
                 // Get opcode.
                 string opcode = def.Opcode;
@@ -58,7 +59,17 @@ namespace Rusty.CutsceneImporter.InstructionSets
                     packer.WriteFile(def.Icon.GetImage().SavePngToBuffer());
                     packer.CloseFile();
                 }
+
+                // Add to index string.
+                if (index != "")
+                    index += "\n";
+                index += $"{category}/{opcode}";
             }
+
+            // Create index file.
+            packer.StartFile("index.txt");
+            packer.WriteFile(Encoding.ASCII.GetBytes(index));
+            packer.CloseFile();
 
             // Close the ZIP file.
             packer.Close();

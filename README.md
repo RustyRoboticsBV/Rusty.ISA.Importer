@@ -38,6 +38,7 @@ So the structure of each program is as follows:
 Instruction sets are stored in ZIP files. The file should have the following internal structure:
 
     ROOT
+     ├index.txt.
      ├<category_name_1>
      │ ├<opcode_1>
      │ │ ├def.xml
@@ -50,6 +51,16 @@ Instruction sets are stored in ZIP files. The file should have the following int
        └...
 
 So the path to a file is always is category/opcode/file. The serializer places instructions without a category in a folder called "undefined".
+
+The `index.txt` file contains a list of folder paths, and is used for easy parsing, like so:
+
+    category_1/opcode_1
+    ...
+    category_1/opcode_n
+    ...
+    category_n/opcode_1
+    ...
+    category_n/opcode_n
 
 ## Instruction Definitions
 This section outlines the XML file structure for instruction definitions. Unless otherwise specified, all XML elements are optional.

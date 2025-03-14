@@ -258,6 +258,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         private static Texture2D GetTexture(string folderPath, string localFilePath)
         {
+            if (folderPath == "")
+                return null;
+
             try
             {
                 // Globalize path.
