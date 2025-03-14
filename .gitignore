@@ -7,7 +7,3 @@
 *.sln
 [Oo]bj/
 [Bb]in/
-
-# Rusty
-[Ss]ubmodules/
-[Aa]ddons/
