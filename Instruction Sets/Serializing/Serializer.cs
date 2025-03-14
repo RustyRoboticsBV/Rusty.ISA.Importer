@@ -42,11 +42,11 @@ namespace Rusty.CutsceneImporter.InstructionSets
                     category = Keywords.UndefinedCategory;
 
                 // Add definition file to ZIP archive.
-                packer.StartFile($"{category}/{opcode}/{Keywords.DefinitionFilename}.xml");
+                packer.StartFile($"{category}/{opcode}/{Keywords.DefinitionFilename}");
                 Document doc = DefinitionSerializer.Serialize(def);
                 try
                 {
-                    doc.Root.GetChild(DefinitionKeywords.Icon).InnerText = $"{Keywords.IconFilename}.png";
+                    doc.Root.GetChild(DefinitionKeywords.Icon).InnerText = $"{Keywords.IconFilename}";
                 }
                 catch { }
                 packer.WriteFile(Encoding.ASCII.GetBytes(doc.GenerateXml()));
@@ -55,7 +55,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
                 // Add icon file to ZIP archive.
                 if (def.Icon != null)
                 {
-                    packer.StartFile($"{category}/{opcode}/{Keywords.IconFilename}.png");
+                    packer.StartFile($"{category}/{opcode}/{Keywords.IconFilename}");
                     packer.WriteFile(def.Icon.GetImage().SavePngToBuffer());
                     packer.CloseFile();
                 }

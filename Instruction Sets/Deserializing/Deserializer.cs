@@ -46,7 +46,7 @@ namespace Rusty.CutsceneImporter.InstructionSets
                 InstructionDefinition definition = InstructionDefinitions.Deserializer.Deserialize(xml, "");
 
                 // Read icon.
-                string iconPath = $"{files[i]}/{Keywords.IconFilename}.png";
+                string iconPath = $"{files[i]}/{Keywords.IconFilename}";
                 byte[] iconBytes = reader.ReadFile(iconPath);
                 Image iconImage = new();
                 iconImage.LoadPngFromBuffer(iconBytes);

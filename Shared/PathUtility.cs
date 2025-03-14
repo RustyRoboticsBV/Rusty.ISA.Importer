@@ -14,7 +14,7 @@ namespace Rusty.CutsceneImporter
         public static string GetPath(string path)
         {
             // Res or user.
-            if (path.StartsWith("res://") && path.StartsWith("user://"))
+            if (path.StartsWith("res://") || path.StartsWith("user://"))
                 return ProjectSettings.GlobalizePath(path);
 
             // Other paths.
