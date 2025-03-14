@@ -141,36 +141,23 @@ See the [main module documentation](TODO) for an explanation about what each ele
      </text_term>
      
      <!-- An argument preview term.
-          The parameter value should match one of the parameters' ID. -->
+          The parameter value should match a parameter ID. -->
      <argument_term>
       <parameter>str</parameter>
       <hide_if>never</hide_if>
      </argument_term>
      
-     <!-- A pre-instruction compile rule term.
-          The rule value should match one of the pre-instruction rules' ID. -->
-     <pre_term>
+     <!-- A compile rule term.
+          The rule value should match a pre-instruction or post-instruction rule ID. -->
+     <rule_term>
       <rule>str</rule>
       <hide_if>never</hide_if>
-     </pre_term>
-     
-     <!-- A post-instruction compile rule term.
-          The rule value should match one of the post-instruction rules' ID. -->
-     <post_term>
-      <rule>str</rule>
-      <hide_if>never</hide_if>
-     </post_term>
-     
-     
-     <!-- Use this to control how the preview multiple copies of this instruction
-          will be drawn. -->
-     <preview_separator>str</preview_separator>
+     </rule_term>
      
      
      
      <!-- The compile rules. Each rule should contain an unique ID. Nested rules
-          only need an unique ID within that rule. ID overlap between pre- and post-
-          instructions is allowed. -->
+          only need an unique ID within that rule. -->
      
      <!-- The pre-instruction block. May contain any number of compile rule elements. -->
      <pre>
@@ -195,6 +182,7 @@ See the [main module documentation](TODO) for an explanation about what each ele
       <tuple id="str">
        <name>str</name>
        <desc>str</desc>
+       <separator>str</separator>
        (nested rule(s))
       </tuple>
       
@@ -203,6 +191,7 @@ See the [main module documentation](TODO) for an explanation about what each ele
        <name>str</name>
        <desc>str</desc>
        <button_text>true</button_text>
+       <separator>str</separator>
        (nested rule)
       </list>
       

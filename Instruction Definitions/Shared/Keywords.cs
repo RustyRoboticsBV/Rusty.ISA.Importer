@@ -55,10 +55,10 @@
 
         // Preview.
         public const string PreviewSeparator = "separator";
+
         public const string TextTerm = "text_term";
         public const string ArgumentTerm = "argument_term";
-        public const string PreRuleTerm = "pre_term";
-        public const string PostRuleTerm = "post_term";
+        public const string CompileRuleTerm = "rule_term";
 
         public const string Text = "text";
         public const string ParameterId = "parameter";

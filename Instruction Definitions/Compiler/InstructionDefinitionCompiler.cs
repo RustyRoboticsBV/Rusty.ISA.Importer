@@ -178,13 +178,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     element.Name = Keywords.ArgumentTerm;
                     element.AddChild(new Element(Keywords.ParameterId, argTerm.ParameterID));
                     break;
-                case PreRuleTerm preTerm:
-                    element.Name = Keywords.PreRuleTerm;
-                    element.AddChild(new Element(Keywords.CompileRuleId, preTerm.RuleID));
-                    break;
-                case PostRuleTerm postTerm:
-                    element.Name = Keywords.PreRuleTerm;
-                    element.AddChild(new Element(Keywords.CompileRuleId, postTerm.RuleID));
+                case CompileRuleTerm ruleTerm:
+                    element.Name = Keywords.CompileRuleTerm;
+                    element.AddChild(new Element(Keywords.CompileRuleId, ruleTerm.RuleID));
                     break;
             }
             return element;

@@ -134,13 +134,12 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                         int minHeight = GetIntChild(element, Keywords.MinHeight, defaults.MinHeight);
                         Color mainColor = GetColorChild(element, Keywords.MainColor, defaults.MainColor);
                         Color textColor = GetColorChild(element, Keywords.TextColor, defaults.TextColor);
-                        args.editorNodeInfo = new EditorNodeInfo(priority, minWidth, minHeight mainColor, textColor);
+                        args.editorNodeInfo = new EditorNodeInfo(priority, minWidth, minHeight, mainColor, textColor);
                         break;
 
                     case Keywords.TextTerm:
                     case Keywords.ArgumentTerm:
-                    case Keywords.PreRuleTerm:
-                    case Keywords.PostRuleTerm:
+                    case Keywords.CompileRuleTerm:
                         break;
 
                     case Keywords.PreInstructions:
