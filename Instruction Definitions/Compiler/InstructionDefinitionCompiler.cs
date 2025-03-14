@@ -42,7 +42,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             if (definition.EditorNode != null)
                 root.AddChild(CompileEditorNodeInfo(definition.EditorNode));
 
-            // Preview terms.
+            // Preview.
+            root.AddChild(new Element(Keywords.PreviewSeparator, definition.PreviewSeparator));
+
             for (int i = 0; i < definition.Preview.Length; i++)
             {
                 root.AddChild(CompilePreviewTerm(definition.Preview[i]));
@@ -65,7 +67,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             Element element = new Element("", "");
 
-            element.Attributes.Add(new Attribute(Keywords.Id, parameter.ID));
+            element.Attributes.Add(new Attribute(Keywords.ID, parameter.ID));
             element.AddChild(new Element(Keywords.DisplayName, parameter.DisplayName));
             element.AddChild(new Element(Keywords.Description, parameter.Description));
 
@@ -176,9 +178,13 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
                     element.Name = Keywords.ArgumentTerm;
                     element.AddChild(new Element(Keywords.ParameterId, argTerm.ParameterID));
                     break;
-                case CompileRuleTerm ruleTerm:
-                    element.Name = Keywords.CompileRuleTerm;
-                    element.AddChild(new Element(Keywords.CompileRuleId, ruleTerm.CompileRuleID));
+                case PreRuleTerm preTerm:
+                    element.Name = Keywords.PreRuleTerm;
+                    element.AddChild(new Element(Keywords.CompileRuleId, preTerm.RuleID));
+                    break;
+                case PostRuleTerm postTerm:
+                    element.Name = Keywords.PreRuleTerm;
+                    element.AddChild(new Element(Keywords.CompileRuleId, postTerm.RuleID));
                     break;
             }
             return element;
@@ -198,7 +204,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
         {
             Element element = new Element("", "");
 
-            element.Attributes.Add(new Attribute(Keywords.Id, compileRule.ID));
+            element.Attributes.Add(new Attribute(Keywords.ID, compileRule.ID));
             element.AddChild(new Element(Keywords.DisplayName, compileRule.DisplayName));
             element.AddChild(new Element(Keywords.Description, compileRule.Description));
 

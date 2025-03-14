@@ -34,6 +34,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             catch (Exception ex)
             {
                 GD.PrintErr($"Could not import instruction definition at '{globalPath}' due to exception:\n{ex.Message}");
+                return null;
             }
         }
     }

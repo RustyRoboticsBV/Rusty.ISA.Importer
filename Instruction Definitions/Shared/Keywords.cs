@@ -11,7 +11,7 @@
 
         // Id.
         public const string Opcode = "opcode";
-        public const string Id = "id";
+        public const string ID = "id";
 
         // Parameters.
         public const string BoolParameter = "bool";
@@ -49,13 +49,16 @@
 
         public const string Priority = "priority";
         public const string MinWidth = "min_width";
+        public const string MinHeight = "min_height";
         public const string MainColor = "color_main";
         public const string TextColor = "color_text";
 
-        // Preview terms.
+        // Preview.
+        public const string PreviewSeparator = "separator";
         public const string TextTerm = "text_term";
         public const string ArgumentTerm = "argument_term";
-        public const string CompileRuleTerm = "rule_term";
+        public const string PreRuleTerm = "pre_term";
+        public const string PostRuleTerm = "post_term";
 
         public const string Text = "text";
         public const string ParameterId = "parameter";
@@ -81,6 +84,5 @@
         public const string StartEnabled = "enabled";
         public const string StartSelected = "selected";
         public const string AddButtonText = "button_text";
-        public const string PreviewSeparator = "preview_separator";
     }
 }

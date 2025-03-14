@@ -22,6 +22,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
         // Editor.
         public EditorNodeInfo editorNodeInfo = null;
+        public string previewSeparator = "";
         public List<PreviewTerm> previewTerms = new();
         public List<CompileRule> preInstructions = new();
         public List<CompileRule> postInstructions = new();
