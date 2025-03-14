@@ -15,7 +15,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
     {
         /* Public methods. */
         /// <summary>
-        /// Load an instruction definition from some file path.
+        /// Load an instruction definition from a file.
         /// </summary>
         public static InstructionDefinition Import(string filePath, Dictionary importOptions)
         {
@@ -23,7 +23,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             string globalPath = ProjectSettings.GlobalizePath(filePath);
             string folderPath = Path.GetDirectoryName(globalPath);
 
-            // Load XML file.
+            // Read file.
             string xml = File.ReadAllText(globalPath);
 
             // Decompile.
@@ -33,7 +33,7 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error importing instruction definition at '{globalPath}': {ex.Message}");
+                GD.PrintErr($"Could not import instruction definition at '{globalPath}' due to exception:\n{ex.Message}");
             }
         }
     }

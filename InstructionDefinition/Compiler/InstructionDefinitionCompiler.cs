@@ -138,8 +138,8 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
             Element nodeInfo = new Element(Keywords.EditorNodeInfo, "");
             nodeInfo.AddChild(new Element(Keywords.Priority, editorNode.Priority.ToString()));
             nodeInfo.AddChild(new Element(Keywords.MinWidth, editorNode.MinWidth.ToString()));
-            nodeInfo.AddChild(new Element(Keywords.MainColor, editorNode.MainColor.ToHtml()));
-            nodeInfo.AddChild(new Element(Keywords.TextColor, editorNode.TextColor.ToHtml()));
+            nodeInfo.AddChild(new Element(Keywords.MainColor, '#' + editorNode.MainColor.ToHtml()));
+            nodeInfo.AddChild(new Element(Keywords.TextColor, '#' + editorNode.TextColor.ToHtml()));
             return nodeInfo;
         }
 
@@ -204,9 +204,9 @@ namespace Rusty.CutsceneImporter.InstructionDefinitions
 
             switch (compileRule)
             {
-                case InstructionRule preInstruction:
+                case InstructionRule instruction:
                     element.Name = Keywords.InstructionRule;
-                    element.AddChild(new Element(Keywords.Opcode, preInstruction.Opcode));
+                    element.AddChild(new Element(Keywords.Opcode, instruction.Opcode));
                     break;
                 case OptionRule optionRule:
                     element.Name = Keywords.OptionRule;
