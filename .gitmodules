@@ -4,3 +4,6 @@
 [submodule "Submodules/Cutscenes"]
 	path = Submodules/Cutscenes
 	url = https://github.com/RustyRoboticsBV/Rusty.Cutscenes.git
+[submodule "Submodules/CSV"]
+	path = Submodules/CSV
+	url = https://github.com/RustyRoboticsBV/Rusty.Csv.git
