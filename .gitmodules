@@ -1,9 +1,6 @@
 [submodule "Submodules/XML"]
 	path = Submodules/XML
 	url = https://github.com/RustyRoboticsBV/Rusty.Xml.git
-[submodule "Submodules/Cutscenes"]
-	path = Submodules/Cutscenes
-	url = https://github.com/RustyRoboticsBV/Rusty.Cutscenes.git
 [submodule "Submodules/CSV"]
 	path = Submodules/CSV
 	url = https://github.com/RustyRoboticsBV/Rusty.Csv.git
