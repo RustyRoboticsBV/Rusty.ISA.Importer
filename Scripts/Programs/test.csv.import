@@ -1,0 +1,15 @@
+[remap]
+
+importer="isa_program_importer"
+type="Resource"
+uid="uid://ckojbpaax2py5"
+path="res://.godot/imported/test.csv-92707233f137c5e1dd01def92308889b.tres"
+
+[deps]
+
+source_file="res://addons/cutsceneimporter/test.csv"
+dest_files=["res://.godot/imported/test.csv-92707233f137c5e1dd01def92308889b.tres"]
+
+[params]
+
+strip_editor_only_instructions=true
